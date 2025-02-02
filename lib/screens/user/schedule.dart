@@ -11,9 +11,9 @@ class ScheduleScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Scheduled Appointments',
-          style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
+          style: TextStyle(color: Colors.white, fontFamily: 'GoogleSans'),
         ),
-        backgroundColor: Colors.cyan,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
       body: StreamBuilder(
@@ -46,14 +46,14 @@ class ScheduleScreen extends StatelessWidget {
                 elevation: 4,
                 child: ListTile(
                   contentPadding: EdgeInsets.all(16.0),
-                  leading: Icon(Icons.schedule, color: Colors.cyan),
+                  leading: Icon(Icons.schedule, color: Colors.blue),
                   title: Text(
                     'Patient: ${data['patientName']}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'Poppins'),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, fontFamily: 'GoogleSans'),
                   ),
                   subtitle: Text(
-                    'Doctor: ${data['doctorName']}\nTime: ${data['appointmentTime']}',
-                    style: TextStyle(color: Colors.grey[700], fontFamily: 'Poppins'),
+                    'Doctor: Dr. ${data['doctorName']}\nTime: ${data['appointmentTime']}',
+                    style: TextStyle(color: Colors.grey[700], fontFamily: 'GoogleSans',fontSize: 16),
                   ),
                   isThreeLine: true,
                 ),

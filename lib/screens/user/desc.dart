@@ -83,12 +83,13 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Dentists Details',
-          style: TextStyle(fontFamily: 'Poppins', color: Colors.white),
+          style: TextStyle(fontFamily: 'GoogleSans', color: Colors.white),
         ),
-        backgroundColor: Colors.cyan,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
       body: SafeArea(
@@ -125,7 +126,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'Poppins',
+                            fontFamily: 'GoogleSans',
                           ),
                         ),
                         SizedBox(height: 10),
@@ -136,7 +137,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'GoogleSans',
                             ),
                           ),
                           subtitle: Text(
@@ -147,13 +148,13 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                         Divider(),
                         ListTile(
                           contentPadding: EdgeInsets.zero,
-                          leading: Icon(Icons.location_on, color: Colors.cyan, size: 24),
+                          leading: Icon(Icons.location_on, color: Colors.blue, size: 24),
                           title: Text(
                             'Location',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'GoogleSans',
                             ),
                           ),
                           subtitle: GestureDetector(
@@ -179,7 +180,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'GoogleSans',
                             ),
                           ),
                           subtitle: Text(
@@ -208,7 +209,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins',
+                          fontFamily: 'GoogleSans',
                         ),
                       ),
                       SizedBox(height: 10),

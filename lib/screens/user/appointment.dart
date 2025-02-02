@@ -82,10 +82,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       appBar: AppBar(
         title: Text(
           'Book Appointment',
-          style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
+          style: TextStyle(color: Colors.white, fontFamily: 'GoogleSans'),
         ),
-        backgroundColor: Colors.cyan,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.blue,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -110,7 +110,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'Poppins',
+                            fontFamily: 'GoogleSans',
                           ),
                         ),
                         SizedBox(height: 10),
@@ -177,7 +177,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                         _submitAppointment(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.cyan,
+                        backgroundColor: Colors.blue,
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 10.0),
                         textStyle: TextStyle(
@@ -190,7 +190,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                       child: Text(
                         'Book Appointment',
                         style: TextStyle(color: Colors.white,
-                            fontFamily: 'Poppins'),
+                            fontFamily: 'GoogleSans'),
                       ),
                     ),
                   ),

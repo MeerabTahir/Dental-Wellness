@@ -13,9 +13,11 @@ class DoctorScreen extends StatelessWidget {
           'Dentists',
           style: TextStyle(
             color: Colors.white,
-            fontFamily: 'Poppins',),),
+            fontFamily: 'GoogleSans',
+          fontSize: 20),),
         foregroundColor: Colors.white,
-        backgroundColor: Colors.cyan,
+        backgroundColor: Colors.blue,
+
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 20),
@@ -103,30 +105,30 @@ class DoctorScreen extends StatelessWidget {
                                   color: Colors.black,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'GoogleSans',
                                 ),
                               ),
                               SizedBox(height: 10),
                               Text(
                                 speciality,
                                 style: TextStyle(
-                                  color: Colors.cyan,
+                                  color: Colors.blue,
                                   fontSize: 14,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'GoogleSans',
                                 ),
                               ),
                               SizedBox(height: 10),
                               Row(
                                 children: [
                                   Icon(Icons.location_on,
-                                      color: Colors.cyan, size: 18),
+                                      color: Colors.blue, size: 18),
                                   SizedBox(width: 5),
                                   Text(
                                     location,
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
-                                      fontFamily: 'Poppins',
+                                      fontFamily: 'GoogleSans',
                                     ),
                                   ),
                                 ],

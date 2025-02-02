@@ -9,12 +9,22 @@ class AppointmentsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'Appointments',
-          style: TextStyle(fontFamily: "GoogleSans",fontSize: 18, color: Colors.white,),
-        ),
         backgroundColor: Colors.blue,
+        elevation: 5,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white, size: 22),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          "My Appointments",
+          style: TextStyle(
+            fontFamily: "GoogleSans",
+            fontSize: 20,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -26,13 +36,16 @@ class AppointmentsPage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
-
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No appointments found.'));
+            return const Center(
+              child: Text(
+                'No appointments found.',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.grey),
+              ),
+            );
           }
 
           final appointments = snapshot.data!.docs
@@ -40,65 +53,110 @@ class AppointmentsPage extends StatelessWidget {
               .toList();
 
           return ListView.builder(
-            itemCount: appointments.length,
+            padding: const EdgeInsets.all(16),
+            itemCount: appointments.length + 1, // +1 to include the image and text
             itemBuilder: (context, index) {
-              final appointment = appointments[index];
+              if (index == 0) {
+                return Column(
+                  children: [
+                    // Image at the top
+                    Image.asset(
+                      'assets/Images/app.jpg', // replace with your image path
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      "Your Appointments",
+                      style: TextStyle(
+                        fontFamily: "GoogleSans",
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      "You can see all appointments here",
+                      style: TextStyle(
+                        fontFamily: "GoogleSans",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                  ],
+                );
+              }
+
+              final appointment = appointments[index - 1]; // offset by 1 because of the added header
               final formattedDate = appointment.appointmentTime.toString();
 
-              return Container(
-                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      leading: const Icon(Icons.person, color: Colors.blue),
-                      title: Text(
-                        'Patient: ${appointment.patientName}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "GoogleSans",
+              return Card(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                color: Colors.white, // Ensuring card is pure white
+                elevation: 5,
+                shadowColor: Colors.blue.withOpacity(0.9),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.blue.shade100,
+                          child: const Icon(Icons.person, color: Colors.blue),
+                        ),
+                        title: Text(
+                          appointment.patientName,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "GoogleSans",
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      'Appointment Time: $formattedDate',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: "GoogleSans",
+                      const Divider(),
+                      Row(
+                        children: [
+                          const Icon(Icons.access_time, color: Colors.blue, size: 20),
+                          const SizedBox(width: 8),
+                          Text(
+                            formattedDate,
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      'Age: ${appointment.patientAge}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: "GoogleSans",
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(Icons.cake, color: Colors.orange, size: 20),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Age: ${appointment.patientAge}',
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      'Concern: ${appointment.patientIssue}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: "GoogleSans",
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(Icons.report_problem, color: Colors.red, size: 20),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              'Concern: ${appointment.patientIssue}',
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

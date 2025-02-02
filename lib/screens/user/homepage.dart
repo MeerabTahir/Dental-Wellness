@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String userName = '';
-  ScrollController _scrollController = ScrollController(); // Added ScrollController
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -142,48 +142,55 @@ class _HomePageState extends State<HomePage> {
         width: width,
         child: Column(
           children: [
-            Container(
-              color: Colors.blue,
-              padding: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          userName.isNotEmpty ? 'Hello, $userName!' : 'Hello!',
-                          style: TextStyle(fontSize: 22, color: Colors.white, fontFamily: 'GoogleSans'),
-                        ),
-                        Text(
-                          'Do oral examinations and consult our best dentists.',
-                          style: TextStyle(fontSize: 18, color: Colors.white70, fontFamily: 'GoogleSans'),
-                        ),
-                      ],
-                    ),
+            // User name card with adjusted size and image on right
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: Container(
+                width: width - 32,  // Matches the width of the feature cards
+                height: 150,        // Matches the height of the feature cards
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            userName.isNotEmpty ? 'Hello, $userName!' : 'Hello!',
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color:Colors.white,fontFamily: 'GoogleSans'),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Welcome to the Dental',
+                            style: TextStyle(fontSize: 16, color: Colors.white,fontFamily: "GoogleSans"),
+                          ), Text(
+                           'Wellness you get all',
+                            style: TextStyle(fontSize: 16, color: Colors.white,fontFamily: "GoogleSans"),
+                          ), Text(
+                            'services here.',
+                            style: TextStyle(fontSize: 16, color: Colors.white,fontFamily: "GoogleSans"),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Image.asset(
+                        'assets/Images/dentisthomes.png',
+                        height: 100,
+                        width: 150,
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    icon: Icon(Icons.logout, color: Colors.white),
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut().then((value) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginScreen()),
-                              (route) => false,
-                        );
-                      }).catchError((e) {
-                        print('Error signing out: $e');
-                      });
-                    },
-                  ),
-                ],
+                ),
               ),
             ),
-            SizedBox(height: 20),
+            // Feature Tiles (with different colors)
             Expanded(
               child: SingleChildScrollView(
-                controller: _scrollController, // Attach ScrollController here
+                controller: _scrollController,
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -191,25 +198,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Column(
                     children: [
-                      buildFeatureTile(context, Icons.calendar_today, "Book an Appointment", '/doctor'),
-                      buildFeatureTile(context, Icons.list_alt, "My Appointments", '/schedule'),
-                      buildFeatureTile(context, Icons.health_and_safety, "Oral Examination", '/oralexamination'),
-                      SizedBox(height: 22),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Add the functionality for the button here
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          padding: EdgeInsets.symmetric(vertical: 22, horizontal: 24),
-                        ),
-                        child: Text(
-                          'Ask Questions',
-                          style: TextStyle(fontSize: 18, color: Colors.white, fontFamily: 'GoogleSans'),
-                        ),
+                      GridView.count(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.all(16),
+                        children: [
+                          buildFeatureTile(context, Icons.calendar_today, "Book Appointment", '/doctor', Colors.blue.shade200),
+                          buildFeatureTile(context, Icons.list_alt, "My Appointments", '/schedule', Colors.pink.shade200),
+                          buildFeatureTile(context, Icons.health_and_safety, "Oral Examination", '/oralexamination', Colors.purple.shade200),
+                          buildFeatureTile(context, Icons.chat, "Ask Questions", '/questions', Colors.orange.shade200),
+                        ],
                       ),
                       SizedBox(height: 20),
                     ],
@@ -224,32 +225,27 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildFeatureTile(BuildContext context, IconData icon, String title, String route) {
-    return Padding(
-      padding: EdgeInsets.only(top: 20),
-      child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, route);
-        },
-        child: Container(
-          width: 380,
-          height: 150,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.lightBlue,
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, size: 50, color: Colors.white),
-                SizedBox(height: 10),
-                Text(
-                  title,
-                  style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w600, fontFamily: 'GoogleSans'),
-                ),
-              ],
-            ),
+  Widget buildFeatureTile(BuildContext context, IconData icon, String title, String route, Color cardColor) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, route);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: cardColor, // Use different colors for each card
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 50, color: Colors.white),
+              SizedBox(height: 10),
+              Text(
+                title,
+                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+            ],
           ),
         ),
       ),
